@@ -43,3 +43,13 @@ func ApagaUmaPersonalidade(w http.ResponseWriter, r *http.Request) {
 	database.DB.Delete(&person, id)
 	json.NewEncoder(w).Encode(person)
 }
+
+func EditaUmaPersonalidade(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var person models.Personalidade
+	database.DB.First(&person, id)
+	json.NewDecoder(r.Body).Decode(&person)
+	database.DB.Save(&person)
+	json.NewEncoder(w).Encode(person)
+}
