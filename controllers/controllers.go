@@ -26,5 +26,5 @@ func RetornaUmaPersonalidade(w http.ResponseWriter, r *http.Request) {
 	id := vars["id"]
 	var person models.Personalidade
 	database.DB.First(&person, id)
-	json.NewDecoder(w).Encode(person)
+	json.NewEncoder(w).Encode(person)
 }
