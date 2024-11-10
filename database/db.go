@@ -1,12 +1,12 @@
 package database
 
-import {
+import (
 	  "gorm.io/driver/postgres"
 	  "gorm.io/gorm"
-}
+  )
 
 var {
-	DB *gorm.db
+	DB *gorm.DB
 	err error
 }
 
