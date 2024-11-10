@@ -3,10 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
-	"github.com/gorilla/mux"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
+	"github.com/FabioLeitao/go-rest-api/database"
 	"github.com/FabioLeitao/go-rest-api/models"
 )
 
@@ -15,16 +16,15 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodasPesonalidades(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalidades)
+	var p []models.Personalidade
+	database.DB.Find(&p)
+	json.NewEncoder(w).Encode(p)
 }
 
 func RetornaUmaPersonalidade(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-
-	for _, personalidade := range models.Personalidades {
-		if strconv.Itoa(personalidade.Id) == id {
-			json.NewEncoder(w).Encode(personalidade)
-		}
-	}
+	var person models.Personalidade
+	database.DB.First(&person, id)
+	json.NewDecoder(w).Encode(person)
 }
